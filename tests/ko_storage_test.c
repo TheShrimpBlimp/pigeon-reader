@@ -20,7 +20,7 @@ static int allowed(uint32_t off,uint32_t n)
 {
     return off <= sizeof bank_flash && n <= sizeof bank_flash-off &&
         ((off>=0xA0000 && off+n<=0xDC000) || (off>=KO_APP_HI && off+n<=KO_APP_DATA_HI) ||
-         (off>=KO_TOP_LO && off+n<=KO_TOP_HI));
+         (off>=KO_TOP_LO && off+n<=KO_TOP_HI) || (off>=KO_EXTRA_LO && off+n<=KO_EXTRA_HI));
 }
 static int st_read(uint32_t off,void *p,uint32_t n)
 { if (!allowed(off,n)) { bad_flash++; return -1; } memcpy(p,bank_flash+off,n); return 0; }
@@ -83,7 +83,10 @@ static void pump(uint32_t n)
     int32_t out[CTL*2];
     for (uint32_t i=0;i<n;i++) { for(uint32_t v=0;v<NVOICE*4u;v++) ko_pcm_poll();mix_block(out,CTL); }
 }
-int main(int argc,char **argv)
+#ifndef KO_STORAGE_TEST_MAIN
+#define KO_STORAGE_TEST_MAIN main
+#endif
+int KO_STORAGE_TEST_MAIN(int argc,char **argv)
 {
     if (argc!=(FELUCCA_KO_DUAL ? 4 : 3)) return 2;
     uint8_t *mp3,*ima;uint32_t nm,ni;int bad=0;

@@ -62,7 +62,9 @@ static struct {
     uint8_t pending;
     uint32_t age[NVOICE], baseline[NVOICE];
 } ko_seq[SAMPLER_PARTS];
-static int ko_seq_on(const track_t *t) { return ko_states[0].on && t>=trk && t<trk+SAMPLER_PARTS && ko_seq[t-trk].enabled && (ko_song(t)||ko_kit(t)); }
+/* PIGEON always uses sampler sequencing. The optional upstream mode still
+ * requires SEQ to opt in; that transient UI flag is cleared on project restore. */
+static int ko_seq_on(const track_t *t) { return ko_states[0].on && t>=trk && t<trk+SAMPLER_PARTS && (FELUCCA_SAMPLER_ONLY || ko_seq[t-trk].enabled) && (ko_song(t)||ko_kit(t)); }
 static int ko_seq_end(const track_t *t) { return ko_seq_on(t) && ko_seq[t-trk].end_mode; }
 static volatile uint8_t ko_seq_firing;
 
