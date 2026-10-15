@@ -192,3 +192,12 @@ uses the repository-local Playwright setup described in web/pigeon/README.md).
 Firmware controller lease tests: compile `tests/browser_controller_test.c` with
 `-Ibuild/gen -Ifirmware/src -lm`. Full panel USB control requires the updated
 PIGEON firmware; physical-device verification remains pending.
+
+## Screen-reader fork
+
+This fork builds the same v0.3 product with the FM-1 Screen Reader protocol enabled.
+The build generates `build/gen/ann_words.h` and immutable `web/words/*.json` from
+`firmware/words.tsv`. Clone `https://github.com/charlesvestal/fm1-reader` beside
+this repository, then run `PYTHON=.venv/bin/python sh tests/run_reader_tests.sh`
+after generating the normal build headers. See [SCREEN_READER.md](docs/SCREEN_READER.md)
+for the protocol, browser controls and remaining physical checks.

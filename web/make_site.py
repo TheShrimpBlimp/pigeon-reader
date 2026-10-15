@@ -92,6 +92,7 @@ def main(pkg, version, out):
         if (HERE / f).exists():
             shutil.copy(HERE / f, ed / f)
     # Standalone sample GUI; these parent modules keep the same relative URLs as web/.
+    shutil.copytree(HERE / "words",out / "words",dirs_exist_ok=True)
     shutil.copytree(HERE / "pigeon", out / "webapp" / "pigeon", dirs_exist_ok=True,
                     ignore=shutil.ignore_patterns("test*.mjs"))
     for dependency in ("fm1backup.js", "ko_bank.js", "fm1pkg.js", "fm1ota.js"):

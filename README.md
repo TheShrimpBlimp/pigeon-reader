@@ -1,3 +1,15 @@
+# PIGEON Reader — experimental fork
+
+This separate PIGEON v0.3 development fork adds support for
+[Charles Vestal's FM-1 Screen Reader](https://github.com/charlesvestal/fm1-reader).
+The primary [PIGEON repository](https://github.com/TheShrimpBlimp/pigeon) is unchanged.
+
+See [screen-reader setup, tests and remaining hardware checks](docs/SCREEN_READER.md).
+This is development source, not a tested hardware release. No installer or website
+firmware is published automatically from this fork.
+
+---
+
 # PIGEON
 
 PIGEON is an open-source, audio-only performance sampler for the **M-VAVE FM1**.

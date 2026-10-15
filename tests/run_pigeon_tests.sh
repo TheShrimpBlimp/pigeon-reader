@@ -7,6 +7,7 @@ OUT=build/pigeon-tests
 mkdir -p "$OUT"
 CC=${CC:-cc}
 PYTHON=${PYTHON:-python3}
+"$PYTHON" tools/gen_words.py firmware/words.tsv web/words build/gen/ann_words.h
 PROFILE='-DFELUCCA_SAMPLER_ONLY=1 -DFELUCCA_KO_DUAL=1'
 for test in ko_test ko_sequence_test pigeon_ui_test pigeon_ui_isolation_test pigeon_boot_test ko_arrange_test pigeon_workflow_test pigeon_expansion_test pigeon_performance_test pigeon_screen_test; do
     $CC -O1 -w $PROFILE -Ibuild/gen -Ifirmware/src "tests/$test.c" -lm -o "$OUT/$test"

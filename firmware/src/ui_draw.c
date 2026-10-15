@@ -1535,6 +1535,10 @@ static void ui_draw(void)
         counting = (uint8_t)seq_counting();
         ui.force = 1;
     }
+#if PIGEON_READER
+    /* The reader remains useful when the physical screen is asleep. */
+    pigeon_reader_frame(fm1_ms);
+#endif
     if (!scr_frame())                                   /* MENU > SCREEN OFF: dark (or waking), nothing drawn */
         return;
     ui_draw_page(counting);

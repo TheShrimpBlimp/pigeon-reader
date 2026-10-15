@@ -1,5 +1,19 @@
 /* SPDX-License-Identifier: GPL-3.0-only
  * Copyright (C) 2026 Leo Kuroshita (@kurogedelic), Hügelton Instruments */
+
+#ifndef PIGEON_READER
+#define PIGEON_READER 0
+#endif
+#if PIGEON_READER
+#define ANN_NAME FW_DISPLAY_NAME " " FW_DISPLAY_VERSION
+#define ANN_DATA __attribute__((section(".pool")))
+#include "ann_words.h"
+#include "announce.c"
+static uint32_t pr_wire_sent;
+static void pigeon_reader_frame(uint32_t now);
+static void pigeon_reader_message(const char *text,const char *suffix);
+static void pigeon_reader_calibration(const char *action,const char *control);
+#endif
 /* FELUCCA user interface.
  * Flat: SURF cards and panels on the palette's background, no rules, one type family (Inter Tight, three sizes), tracks
  * named by their numbers 1..4 on a cushion (icons.c trk_icon). Four columns <-> KNOB 1..4. Rendering is lazy:
@@ -446,6 +460,9 @@ static void ui_say(const char *a, const char *b)
     str_cpy(ui.msg + n, b, sizeof ui.msg - n);
     ui.msg_t = 40;
     ui.msg2[0] = 0;
+#if PIGEON_READER
+    pigeon_reader_message(a,b);
+#endif
 }
 
 static void ui_message(const char *s) { ui_say(s, ""); }

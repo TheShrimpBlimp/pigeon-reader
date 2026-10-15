@@ -1928,6 +1928,9 @@ static void setup_title(void)
 }
 static void setup_show(const char *what, const char *name)     /* "PRESS" / "TURN RIGHT", the control */
 {
+#if PIGEON_READER
+    pigeon_reader_calibration(what,name);
+#endif
 #if FELUCCA_SAMPLER_ONLY
     draw_text_line(8,49,224,&AF_S,what,T_MID,T_BG,0);
     cv_begin(224,86,T_BG);
